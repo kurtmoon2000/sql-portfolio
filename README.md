@@ -4,7 +4,7 @@
 MSN Health Informatics · UT Tyler (2026) · Azure DP-900 · Alvarado, TX
 
 > The only analyst who has documented patients AND queried the database.  
-> 5+ years clinical experience with Epic, Cerner, and Meditech — now applying that knowledge to data.
+> 7+ years clinical experience with Epic, Cerner, and Meditech — now applying that knowledge to data.
 
 ---
 
