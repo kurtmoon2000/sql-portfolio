@@ -236,7 +236,7 @@ LIMIT 10;
 /* ============================================================
    END OF FILE
    Tools     : Google BigQuery (SQL)
-   Viz tool  : Microsoft Power BI
+   Viz tool  : Tableau
    Data source: Texas Health Care Information Collection (THCIC)
                 edstat2q2025-2.xlsx — Q1 and Q2 2025
    ============================================================ */
