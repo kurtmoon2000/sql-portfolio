@@ -1,4 +1,4 @@
-# Kurt Moon RN BSN | Healthcare Data Analyst
+# Kurt Moon RN MSN-IQS | Healthcare Data Analyst
 
 **Registered Nurse transitioning into Healthcare Analytics**  
 MSN Health Informatics · UT Tyler (2026) · Azure DP-900 · Alvarado, TX
