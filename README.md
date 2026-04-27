@@ -26,17 +26,7 @@ in BigQuery using REGEXP_REPLACE, SAFE_CAST, COALESCE, and CASE WHEN.
 
 **[→ View SQL queries](./02_texas-ed-analysis/texas_ed_analysis_final.sql)**
 
----
 
-### 2. Fetal Mortality Analysis
-**Tools:** SQL Server · Power BI  
-**Data:** CDC vital statistics · Texas fetal mortality records
-
-Built a relational SQL database from CDC data to analyze fetal mortality trends
-across Texas counties. Performed data cleaning, validation, and trend analysis.
-Visualized findings in an interactive Power BI dashboard.
-
-**[→ View SQL queries](./01_fetal-mortality/)**
 
 ---
 
@@ -56,7 +46,7 @@ window functions, and data cleaning functions. Updated regularly.
 |---|---|
 | SQL | SELECT · WHERE · GROUP BY · JOINs · CTEs · Window Functions · COALESCE · CAST · CASE WHEN |
 | Cleaning | REGEXP_REPLACE · SAFE_CAST · NULLIF · TRIM · SUBSTR · LENGTH |
-| Visualization | Power BI · DAX · Interactive dashboards |
+| Visualization | Tableau · DAX · Interactive dashboards |
 | Cloud | Google BigQuery · Azure (DP-900) |
 | EHR Systems | Epic · Cerner · Meditech |
 | Clinical | 5+ years RN · Population health · Quality metrics · Workflow analysis |
