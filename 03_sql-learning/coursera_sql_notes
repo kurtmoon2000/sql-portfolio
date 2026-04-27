@@ -1,0 +1,179 @@
+/* ============================================================
+   SQL LEARNING JOURNEY
+   Author  : Kurt Moon RN BSN MSN
+   Course  : Google Data Analytics — Coursera
+   Tool    : Google BigQuery
+   Purpose : Practice queries and notes from each lesson
+   ============================================================ */
+
+
+/* ============================================================
+   LESSON 1 — SELECT, FROM, WHERE
+   The foundation of every SQL query
+   ============================================================ */
+
+-- Basic SELECT — choose which columns to show
+SELECT first_name, last_name
+FROM customers;
+
+-- SELECT all columns
+SELECT *
+FROM customers;
+
+-- WHERE — filter rows (like Excel filter button)
+SELECT first_name, last_name
+FROM customers
+WHERE city = 'Austin';
+
+
+/* ============================================================
+   LESSON 2 — DISTINCT
+   Remove duplicates — like Excel Remove Duplicates
+   ============================================================ */
+
+-- Show only unique countries — no duplicates
+SELECT DISTINCT country
+FROM customers
+ORDER BY country;
+
+-- Use DISTINCT + ORDER BY for data cleaning
+-- Sorts values alphabetically so typos appear next to each other
+-- e.g. "usa" and "USA" will show up next to each other
+
+
+/* ============================================================
+   LESSON 3 — ORDER BY, LIMIT, COUNT
+   ============================================================ */
+
+-- ORDER BY — sort results A to Z
+SELECT first_name, last_name
+FROM customers
+ORDER BY last_name ASC;
+
+-- ORDER BY Z to A
+SELECT first_name, last_name
+FROM customers
+ORDER BY last_name DESC;
+
+-- LIMIT — return only top N rows
+SELECT first_name, age
+FROM customers
+ORDER BY age DESC
+LIMIT 10;
+
+-- COUNT — count rows (like Excel COUNTA)
+SELECT COUNT(*) AS total_customers
+FROM customers;
+
+-- COUNT with WHERE — count only matching rows
+SELECT COUNT(*) AS austin_customers
+FROM customers
+WHERE city = 'Austin';
+
+
+/* ============================================================
+   LESSON 4 — DATA CLEANING FUNCTIONS
+   ============================================================ */
+
+-- LENGTH — counts characters including spaces
+-- Use to find values with wrong format
+SELECT country, LENGTH(country) AS char_count
+FROM customers
+ORDER BY char_count DESC;
+
+-- TRIM — removes spaces from outside a string
+-- 'Mexico ' becomes 'Mexico'
+SELECT TRIM(country) AS clean_country
+FROM customers;
+
+-- SUBSTR — cuts a piece out of a string
+-- SUBSTR(column, start position, how many characters)
+SELECT SUBSTR(phone, 1, 3) AS area_code
+FROM customers;
+
+-- CAST — converts one data type to another
+-- Use when a number is stored as text
+SELECT CAST(age AS INT64) AS age_number
+FROM customers;
+
+-- COALESCE — replaces NULL with a value
+-- Like filling blank cells in Excel
+SELECT COALESCE(phone, 'No phone on file') AS phone
+FROM customers;
+
+
+/* ============================================================
+   LESSON 5 — CLEANING PROCESS (APPLIED TO REAL DATA)
+   Thought process when I get raw data:
+   1. SELECT * — see what you have
+   2. COUNTIF — find NULLs in every column
+   3. WHERE IS NULL — see the actual NULL rows
+   4. WHERE IS NULL AND IS NULL — confirm no row is completely empty
+   5. Fix with COALESCE, TRIM, CAST
+   6. Verify — row count, null check, gut check
+   ============================================================ */
+
+-- Step 1: Initial look
+SELECT * FROM table_name LIMIT 10;
+
+-- Step 2: Count NULLs
+SELECT
+  COUNTIF(column1 IS NULL) AS null_col1,
+  COUNTIF(column2 IS NULL) AS null_col2,
+  COUNT(*) AS total_rows
+FROM table_name;
+
+-- Step 3: See NULL rows
+SELECT *
+FROM table_name
+WHERE column1 IS NULL
+   OR column2 IS NULL;
+
+-- Step 4: Confirm no row is completely empty
+SELECT *
+FROM table_name
+WHERE column1 IS NULL
+  AND column2 IS NULL;
+
+-- Step 5: Clean
+SELECT
+  TRIM(column1)                    AS clean_col1,
+  COALESCE(column2, 0)             AS clean_col2,
+  CAST(column3 AS INT64)           AS clean_col3
+FROM table_name;
+
+
+/* ============================================================
+   LESSON 6 — ADVANCED FUNCTIONS LEARNED
+   ============================================================ */
+
+-- CASE WHEN — SQL's IF statement
+-- Creates categories from existing data
+SELECT
+  hospital_name,
+  CASE
+    WHEN age < 18  THEN 'Pediatric'
+    WHEN age > 65  THEN 'Geriatric'
+    ELSE 'Adult'
+  END AS age_group
+FROM patients;
+
+-- NULLIF — prevents divide by zero crash
+-- Returns NULL instead of crashing when denominator is 0
+SELECT
+  ROUND(
+    (new_value - old_value) * 100.0
+    / NULLIF(old_value, 0)
+  , 1) AS pct_change
+FROM table_name;
+
+-- REGEXP_REPLACE — removes characters from a string
+-- Used to strip commas from numbers like '7,058'
+SELECT
+  SAFE_CAST(REGEXP_REPLACE(Q1, ',', '') AS INT64) AS q1_clean
+FROM table_name;
+
+-- SAFE_CAST — like CAST but returns NULL instead of crashing
+-- Use on messy real-world data
+SELECT SAFE_CAST(column1 AS INT64) AS clean_number
+FROM table_name;
